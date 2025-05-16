@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EntitiyFrameworkCoreStudy": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
