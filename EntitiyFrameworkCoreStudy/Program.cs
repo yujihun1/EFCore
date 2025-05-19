@@ -12,6 +12,7 @@ namespace EntitiyFrameworkCoreStudy
         {
             using (var db = new EfStudyDbContext())
             {
+                #region + sql 예시
                 // 1. SELECT 쿼리
                 // 1) DbSet<User> selectList = db.Users;
                 // 2) List<User> selectList = db.Users.ToList().Where().OrderBy();
@@ -36,7 +37,61 @@ namespace EntitiyFrameworkCoreStudy
                 // DELETE FROM User WHERE UserId = 2;
                 //var user = new User { UserId = 2 };
                 //db.Users.Remove(user);
-                //db.SaveChanges();
+                //db.SaveChanges(); 
+                #endregion
+
+
+                #region + Linq의 분류(2가지)
+                // # Linq 분류(2가지)
+                // 1. 쿼리 구문
+                // from user in users
+                // where ....
+                // select new;
+
+                // 2. 메서드 구문
+                // db.Users.Where().ToList(); 
+                #endregion
+
+
+                // .Where(), OrderBy()
+                // 1. .Where()
+                // SELECT * FROM Users WHERE UserId = 1;
+
+                //var list = db.Users.ToList();
+                //var list = db.Users.Where(u => u.UserName == "임길동");
+
+                //foreach (var user in list)
+                //{
+                //    Console.WriteLine(
+                //        $"{user.UserId}.{user.UserName}({user.Birth})");
+                //}
+
+                // 게시물 1개 수정 -> 데이터 가져옴
+                // 특정 데이터 1개 가져오기
+                // .First(), .FirstOrDefault(), .Single(), .SingleOrDefault()
+                //var user = db.Users.First();
+                //Select Top 1 * From Users
+
+                //var user = db.Users.Single(u => u.UserId == 1);
+                // SELECT TOP 1 * FROM Users WHERE USERNAME = "임길동";
+
+                // SingleOrDefault() vs FirstOrDefault()   
+                // SingleOrDefault() 권장
+
+                // # OrderBy()
+                // 1,2,3,4,5,6
+
+                // # OrderByDescending()
+                // 6,5,4,3,2,1
+
+                var list = db.Users.OrderByDescending(u => u.Birth).ToList();
+
+                foreach (var user in list)
+                {
+                    Console.WriteLine(
+                        $"{user.UserId}.{user.UserName}({user.Birth})");
+                }
+
             }
         }
 
