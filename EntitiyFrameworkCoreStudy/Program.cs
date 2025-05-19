@@ -1,39 +1,45 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using EntitiyFrameworkCoreStudy.Data;
+using EntitiyFrameworkCoreStudy.Entites;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace EntitiyFrameworkCoreStudy
-{ 
-      class program
 {
-    static void Main(String[] args)
+    class program
     {
-        using (var db = new EfStudyDbContext())
+        static void Main(String[] args)
         {
-            var userList = db.Users;
-            foreach (var user in userList)
+            using (var db = new EfStudyDbContext())
             {
-                Console.WriteLine(user.UserName);
+                // 1. SELECT 쿼리
+                // 1) DbSet<User> selectList = db.Users;
+                // 2) List<User> selectList = db.Users.ToList().Where().OrderBy();
+                // 3) IEnumerable<User> selectList = db.Users.AsEnumerable();
+                // 4) IQueryable<User> selectList = from user in db.User select user;
+
+                // # IEnumerable vs IQueryable
+                // Extension Query => 작성이 가능
+                // 1. IEnumerable => 쿼리 => 데이터(10명) => Client => Slow
+                // 2. IQueryable => 쿼리 => 데이터(10명) => Server => Fast
+
+                // 2. INSERT 쿼리
+                // db.Users.Add(User);
+                // db.SaveChanges();
+
+                // 3. UPDATE 쿼리
+                //var user = new User { UserId = 1, UserName = "장길동" };
+                //db.Entry(user).State = EntityState.Modified;
+                //db.SaveChanges();
+
+                // 4. DELETE 쿼리
+                // DELETE FROM User WHERE UserId = 2;
+                //var user = new User { UserId = 2 };
+                //db.Users.Remove(user);
+                //db.SaveChanges();
             }
-
         }
-    }
-}
 
-public class EfStudyDbContext : DbContext
-{
-    public DbSet<User> Users { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-        optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AspnetCoreDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
     }
-    public class User
-    {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
 
-        public string Birth { get; set; }
-    }
- }
 }
